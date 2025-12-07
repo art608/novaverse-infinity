@@ -1,0 +1,34 @@
+{
+    "app_name": "NovaVerse Infinity",
+    "description": "NASA-style interactive universe explorer",
+    "objects": [
+        {
+            "name": "Sun",
+            "type": "Star",
+            "age": "4.6 billion years",
+            "distance": "93 million miles from Earth",
+            "description": "The Sun is the massive star at the center of our solar system."
+        },
+        {
+            "name": "Earth",
+            "type": "Planet",
+            "age": "4.54 billion years",
+            "distance": "93 million miles from the Sun",
+            "description": "Earth is the only known planet to support life."
+        },
+        {
+            "name": "Moon",
+            "type": "Moon",
+            "age": "4.51 billion years",
+            "distance": "238,855 miles from Earth",
+            "description": "The Moon controls tides and stabilizes Earth's rotation."
+        },
+        {
+            "name": "Milky Way",
+            "type": "Galaxy",
+            "age": "13.6 billion years",
+            "distance": "0 (Home Galaxy)",
+            "description": "Our home galaxy containing hundreds of billions of stars."
+        }
+    ]
+}
