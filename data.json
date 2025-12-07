@@ -1,6 +1,6 @@
 {
     "app_name": "NovaVerse Infinity",
-    "description": "NASA-style interactive universe explorer",
+    "description": "NASA-style interactive universe explorer with massive galaxy expansion pack.",
     "objects": [
         {
             "name": "Sun",
@@ -29,6 +29,426 @@
             "age": "13.6 billion years",
             "distance": "0 (Home Galaxy)",
             "description": "Our home galaxy containing hundreds of billions of stars."
+        },
+        {
+            "name": "Triangulum Galaxy 1",
+            "type": "Galaxy",
+            "age": "10.93 billion years",
+            "distance": "6247.14 million light years",
+            "description": "A massive star system containing billions to trillions of stars, planets, nebulae, and black holes."
+        },
+        {
+            "name": "Small Magellanic Cloud Galaxy 2",
+            "type": "Galaxy",
+            "age": "10.56 billion years",
+            "distance": "6638.47 million light years",
+            "description": "A massive star system containing billions to trillions of stars, planets, nebulae, and black holes."
+        },
+        {
+            "name": "GN-z11 Galaxy 3",
+            "type": "Galaxy",
+            "age": "11.86 billion years",
+            "distance": "1867.75 million light years",
+            "description": "A massive star system containing billions to trillions of stars, planets, nebulae, and black holes."
+        },
+        {
+            "name": "Large Magellanic Cloud Galaxy 4",
+            "type": "Galaxy",
+            "age": "8.2 billion years",
+            "distance": "8893.56 million light years",
+            "description": "A massive star system containing billions to trillions of stars, planets, nebulae, and black holes."
+        },
+        {
+            "name": "Black Eye Galaxy 5",
+            "type": "Galaxy",
+            "age": "10.26 billion years",
+            "distance": "6612.36 million light years",
+            "description": "A massive star system containing billions to trillions of stars, planets, nebulae, and black holes."
+        },
+        {
+            "name": "MACS0647-JD Galaxy 6",
+            "type": "Galaxy",
+            "age": "13.02 billion years",
+            "distance": "7111.9 million light years",
+            "description": "A massive star system containing billions to trillions of stars, planets, nebulae, and black holes."
+        },
+        {
+            "name": "Large Magellanic Cloud Galaxy 7",
+            "type": "Galaxy",
+            "age": "12.75 billion years",
+            "distance": "7798.21 million light years",
+            "description": "A massive star system containing billions to trillions of stars, planets, nebulae, and black holes."
+        },
+        {
+            "name": "Andromeda Galaxy 8",
+            "type": "Galaxy",
+            "age": "11.38 billion years",
+            "distance": "12683.31 million light years",
+            "description": "A massive star system containing billions to trillions of stars, planets, nebulae, and black holes."
+        },
+        {
+            "name": "Small Magellanic Cloud Galaxy 9",
+            "type": "Galaxy",
+            "age": "8.4 billion years",
+            "distance": "11259.51 million light years",
+            "description": "A massive star system containing billions to trillions of stars, planets, nebulae, and black holes."
+        },
+        {
+            "name": "Andromeda Galaxy 10",
+            "type": "Galaxy",
+            "age": "8.48 billion years",
+            "distance": "4598.78 million light years",
+            "description": "A massive star system containing billions to trillions of stars, planets, nebulae, and black holes."
+        },
+        {
+            "name": "Andromeda Galaxy 11",
+            "type": "Galaxy",
+            "age": "9.74 billion years",
+            "distance": "4848.35 million light years",
+            "description": "A massive star system containing billions to trillions of stars, planets, nebulae, and black holes."
+        },
+        {
+            "name": "Andromeda Galaxy 12",
+            "type": "Galaxy",
+            "age": "8.47 billion years",
+            "distance": "2546.02 million light years",
+            "description": "A massive star system containing billions to trillions of stars, planets, nebulae, and black holes."
+        },
+        {
+            "name": "Small Magellanic Cloud Galaxy 13",
+            "type": "Galaxy",
+            "age": "12.24 billion years",
+            "distance": "5502.28 million light years",
+            "description": "A massive star system containing billions to trillions of stars, planets, nebulae, and black holes."
+        },
+        {
+            "name": "Cartwheel Galaxy 14",
+            "type": "Galaxy",
+            "age": "8.42 billion years",
+            "distance": "6028.66 million light years",
+            "description": "A massive star system containing billions to trillions of stars, planets, nebulae, and black holes."
+        },
+        {
+            "name": "Small Magellanic Cloud Galaxy 15",
+            "type": "Galaxy",
+            "age": "8.16 billion years",
+            "distance": "12291.3 million light years",
+            "description": "A massive star system containing billions to trillions of stars, planets, nebulae, and black holes."
+        },
+        {
+            "name": "Pinwheel Galaxy 16",
+            "type": "Galaxy",
+            "age": "10.38 billion years",
+            "distance": "3349.25 million light years",
+            "description": "A massive star system containing billions to trillions of stars, planets, nebulae, and black holes."
+        },
+        {
+            "name": "Pinwheel Galaxy 17",
+            "type": "Galaxy",
+            "age": "8.03 billion years",
+            "distance": "2189.38 million light years",
+            "description": "A massive star system containing billions to trillions of stars, planets, nebulae, and black holes."
+        },
+        {
+            "name": "NGC 1300 Galaxy 18",
+            "type": "Galaxy",
+            "age": "8.22 billion years",
+            "distance": "12106.6 million light years",
+            "description": "A massive star system containing billions to trillions of stars, planets, nebulae, and black holes."
+        },
+        {
+            "name": "Triangulum Galaxy 19",
+            "type": "Galaxy",
+            "age": "8.82 billion years",
+            "distance": "4405.47 million light years",
+            "description": "A massive star system containing billions to trillions of stars, planets, nebulae, and black holes."
+        },
+        {
+            "name": "MACS0647-JD Galaxy 20",
+            "type": "Galaxy",
+            "age": "10.54 billion years",
+            "distance": "2877.31 million light years",
+            "description": "A massive star system containing billions to trillions of stars, planets, nebulae, and black holes."
+        },
+        {
+            "name": "Hoag\u2019s Object Galaxy 21",
+            "type": "Galaxy",
+            "age": "9.28 billion years",
+            "distance": "7542.34 million light years",
+            "description": "A massive star system containing billions to trillions of stars, planets, nebulae, and black holes."
+        },
+        {
+            "name": "Triangulum Galaxy 22",
+            "type": "Galaxy",
+            "age": "11.33 billion years",
+            "distance": "4903.24 million light years",
+            "description": "A massive star system containing billions to trillions of stars, planets, nebulae, and black holes."
+        },
+        {
+            "name": "Centaurus A Galaxy 23",
+            "type": "Galaxy",
+            "age": "10.44 billion years",
+            "distance": "3458.37 million light years",
+            "description": "A massive star system containing billions to trillions of stars, planets, nebulae, and black holes."
+        },
+        {
+            "name": "NGC 1300 Galaxy 24",
+            "type": "Galaxy",
+            "age": "13.19 billion years",
+            "distance": "3218.63 million light years",
+            "description": "A massive star system containing billions to trillions of stars, planets, nebulae, and black holes."
+        },
+        {
+            "name": "Whirlpool Galaxy 25",
+            "type": "Galaxy",
+            "age": "12.16 billion years",
+            "distance": "10069.39 million light years",
+            "description": "A massive star system containing billions to trillions of stars, planets, nebulae, and black holes."
+        },
+        {
+            "name": "Andromeda Galaxy 26",
+            "type": "Galaxy",
+            "age": "12.03 billion years",
+            "distance": "12574.19 million light years",
+            "description": "A massive star system containing billions to trillions of stars, planets, nebulae, and black holes."
+        },
+        {
+            "name": "Small Magellanic Cloud Galaxy 27",
+            "type": "Galaxy",
+            "age": "13.18 billion years",
+            "distance": "9004.87 million light years",
+            "description": "A massive star system containing billions to trillions of stars, planets, nebulae, and black holes."
+        },
+        {
+            "name": "Centaurus A Galaxy 28",
+            "type": "Galaxy",
+            "age": "11.49 billion years",
+            "distance": "7252.26 million light years",
+            "description": "A massive star system containing billions to trillions of stars, planets, nebulae, and black holes."
+        },
+        {
+            "name": "Black Eye Galaxy 29",
+            "type": "Galaxy",
+            "age": "9.95 billion years",
+            "distance": "328.4 million light years",
+            "description": "A massive star system containing billions to trillions of stars, planets, nebulae, and black holes."
+        },
+        {
+            "name": "NGC 1300 Galaxy 30",
+            "type": "Galaxy",
+            "age": "13.44 billion years",
+            "distance": "3249.91 million light years",
+            "description": "A massive star system containing billions to trillions of stars, planets, nebulae, and black holes."
+        },
+        {
+            "name": "Sombrero Galaxy 31",
+            "type": "Galaxy",
+            "age": "8.1 billion years",
+            "distance": "9588.16 million light years",
+            "description": "A massive star system containing billions to trillions of stars, planets, nebulae, and black holes."
+        },
+        {
+            "name": "Centaurus A Galaxy 32",
+            "type": "Galaxy",
+            "age": "13.49 billion years",
+            "distance": "12999.4 million light years",
+            "description": "A massive star system containing billions to trillions of stars, planets, nebulae, and black holes."
+        },
+        {
+            "name": "Sombrero Galaxy 33",
+            "type": "Galaxy",
+            "age": "9.0 billion years",
+            "distance": "4575.57 million light years",
+            "description": "A massive star system containing billions to trillions of stars, planets, nebulae, and black holes."
+        },
+        {
+            "name": "Black Eye Galaxy 34",
+            "type": "Galaxy",
+            "age": "11.25 billion years",
+            "distance": "5716.21 million light years",
+            "description": "A massive star system containing billions to trillions of stars, planets, nebulae, and black holes."
+        },
+        {
+            "name": "IC 1011 Galaxy 35",
+            "type": "Galaxy",
+            "age": "9.52 billion years",
+            "distance": "706.46 million light years",
+            "description": "A massive star system containing billions to trillions of stars, planets, nebulae, and black holes."
+        },
+        {
+            "name": "IC 1011 Galaxy 36",
+            "type": "Galaxy",
+            "age": "9.19 billion years",
+            "distance": "7495.01 million light years",
+            "description": "A massive star system containing billions to trillions of stars, planets, nebulae, and black holes."
+        },
+        {
+            "name": "Centaurus A Galaxy 37",
+            "type": "Galaxy",
+            "age": "12.25 billion years",
+            "distance": "296.51 million light years",
+            "description": "A massive star system containing billions to trillions of stars, planets, nebulae, and black holes."
+        },
+        {
+            "name": "Cartwheel Galaxy 38",
+            "type": "Galaxy",
+            "age": "8.25 billion years",
+            "distance": "9648.79 million light years",
+            "description": "A massive star system containing billions to trillions of stars, planets, nebulae, and black holes."
+        },
+        {
+            "name": "Messier 87 Galaxy 39",
+            "type": "Galaxy",
+            "age": "11.68 billion years",
+            "distance": "11653.89 million light years",
+            "description": "A massive star system containing billions to trillions of stars, planets, nebulae, and black holes."
+        },
+        {
+            "name": "Black Eye Galaxy 40",
+            "type": "Galaxy",
+            "age": "9.36 billion years",
+            "distance": "3617.07 million light years",
+            "description": "A massive star system containing billions to trillions of stars, planets, nebulae, and black holes."
+        },
+        {
+            "name": "Centaurus A Galaxy 41",
+            "type": "Galaxy",
+            "age": "10.76 billion years",
+            "distance": "12740.63 million light years",
+            "description": "A massive star system containing billions to trillions of stars, planets, nebulae, and black holes."
+        },
+        {
+            "name": "Whirlpool Galaxy 42",
+            "type": "Galaxy",
+            "age": "8.6 billion years",
+            "distance": "3777.28 million light years",
+            "description": "A massive star system containing billions to trillions of stars, planets, nebulae, and black holes."
+        },
+        {
+            "name": "Hoag\u2019s Object Galaxy 43",
+            "type": "Galaxy",
+            "age": "13.05 billion years",
+            "distance": "2698.01 million light years",
+            "description": "A massive star system containing billions to trillions of stars, planets, nebulae, and black holes."
+        },
+        {
+            "name": "Sombrero Galaxy 44",
+            "type": "Galaxy",
+            "age": "9.87 billion years",
+            "distance": "12307.07 million light years",
+            "description": "A massive star system containing billions to trillions of stars, planets, nebulae, and black holes."
+        },
+        {
+            "name": "Messier 87 Galaxy 45",
+            "type": "Galaxy",
+            "age": "10.78 billion years",
+            "distance": "2197.84 million light years",
+            "description": "A massive star system containing billions to trillions of stars, planets, nebulae, and black holes."
+        },
+        {
+            "name": "Black Eye Galaxy 46",
+            "type": "Galaxy",
+            "age": "12.31 billion years",
+            "distance": "12385.64 million light years",
+            "description": "A massive star system containing billions to trillions of stars, planets, nebulae, and black holes."
+        },
+        {
+            "name": "Hoag\u2019s Object Galaxy 47",
+            "type": "Galaxy",
+            "age": "10.83 billion years",
+            "distance": "1964.61 million light years",
+            "description": "A massive star system containing billions to trillions of stars, planets, nebulae, and black holes."
+        },
+        {
+            "name": "Large Magellanic Cloud Galaxy 48",
+            "type": "Galaxy",
+            "age": "8.59 billion years",
+            "distance": "1995.6 million light years",
+            "description": "A massive star system containing billions to trillions of stars, planets, nebulae, and black holes."
+        },
+        {
+            "name": "MACS0647-JD Galaxy 49",
+            "type": "Galaxy",
+            "age": "10.15 billion years",
+            "distance": "9998.73 million light years",
+            "description": "A massive star system containing billions to trillions of stars, planets, nebulae, and black holes."
+        },
+        {
+            "name": "Centaurus A Galaxy 50",
+            "type": "Galaxy",
+            "age": "8.43 billion years",
+            "distance": "27.07 million light years",
+            "description": "A massive star system containing billions to trillions of stars, planets, nebulae, and black holes."
+        },
+        {
+            "name": "Messier 87 Galaxy 51",
+            "type": "Galaxy",
+            "age": "8.61 billion years",
+            "distance": "9823.7 million light years",
+            "description": "A massive star system containing billions to trillions of stars, planets, nebulae, and black holes."
+        },
+        {
+            "name": "Pinwheel Galaxy 52",
+            "type": "Galaxy",
+            "age": "8.03 billion years",
+            "distance": "5488.93 million light years",
+            "description": "A massive star system containing billions to trillions of stars, planets, nebulae, and black holes."
+        },
+        {
+            "name": "Small Magellanic Cloud Galaxy 53",
+            "type": "Galaxy",
+            "age": "9.62 billion years",
+            "distance": "5018.31 million light years",
+            "description": "A massive star system containing billions to trillions of stars, planets, nebulae, and black holes."
+        },
+        {
+            "name": "Tadpole Galaxy 54",
+            "type": "Galaxy",
+            "age": "9.19 billion years",
+            "distance": "1956.4 million light years",
+            "description": "A massive star system containing billions to trillions of stars, planets, nebulae, and black holes."
+        },
+        {
+            "name": "Large Magellanic Cloud Galaxy 55",
+            "type": "Galaxy",
+            "age": "12.0 billion years",
+            "distance": "7562.29 million light years",
+            "description": "A massive star system containing billions to trillions of stars, planets, nebulae, and black holes."
+        },
+        {
+            "name": "Andromeda Galaxy 56",
+            "type": "Galaxy",
+            "age": "8.58 billion years",
+            "distance": "5890.96 million light years",
+            "description": "A massive star system containing billions to trillions of stars, planets, nebulae, and black holes."
+        },
+        {
+            "name": "Hoag\u2019s Object Galaxy 57",
+            "type": "Galaxy",
+            "age": "10.52 billion years",
+            "distance": "7018.54 million light years",
+            "description": "A massive star system containing billions to trillions of stars, planets, nebulae, and black holes."
+        },
+        {
+            "name": "Andromeda Galaxy 58",
+            "type": "Galaxy",
+            "age": "12.41 billion years",
+            "distance": "9924.53 million light years",
+            "description": "A massive star system containing billions to trillions of stars, planets, nebulae, and black holes."
+        },
+        {
+            "name": "Whirlpool Galaxy 59",
+            "type": "Galaxy",
+            "age": "9.23 billion years",
+            "distance": "2943.92 million light years",
+            "description": "A massive star system containing billions to trillions of stars, planets, nebulae, and black holes."
+        },
+        {
+            "name": "Small Magellanic Cloud Galaxy 60",
+            "type": "Galaxy",
+            "age": "12.76 billion years",
+            "distance": "6009.6 million light years",
+            "description": "A massive star system containing billions to trillions of stars, planets, nebulae, and black holes."
         }
     ]
 }
