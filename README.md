@@ -1,21 +1,29 @@
 
-NovaVerse Infinity — Evolution v4
+NovaVerse Infinity — Massive Pack
 ================================
 
-What's included:
-- index.html           (Advanced NASA-style UI with clustering, filters, TTS)
-- data_large.json      (2,000 generated objects; some have curated images)
-- images/              (50 curated placeholder images, ready to show)
-- download_nasa_images.sh (helper placeholder script)
-- README.md            (this file)
+Contents:
+- index.html (NASA-style UI with search, zoom and TTS)
+- data_large.json (5,000 auto-generated objects)
+- download_nasa_images.sh (script generator inside the UI to fetch images using NASA Images API)
+- README.md (this file)
 
-How to host on GitHub Pages:
-1. Create a new GitHub repo.
-2. Upload index.html, data_large.json, images/ and other files to the repo root.
-3. In repo Settings -> Pages, choose the main branch and root as the source.
-4. Wait a few minutes and visit https://<username>.github.io/<repo>/
+How to use:
+1. Unzip and review files locally.
+2. To host on GitHub Pages:
+   - Create a new GitHub repo.
+   - Upload index.html and data_large.json to the repo root (or gh-pages branch).
+   - Go to repository Settings -> Pages and select the branch to publish.
+   - Your site will be available at https://<username>.github.io/<repo>/
 
-Notes:
-- The UI uses browser SpeechSynthesis for audio. No server needed.
-- To add real NASA images, run your own download script locally using the provided image queries or NASA Images API.
-- If you want me to produce a version with <100 curated real NASA images embedded (public domain), say 'Embed NASA images' and I will prepare a zip with placeholder filenames you can replace, or attempt to fetch them if you provide URLs.
+Image download:
+- The UI can generate a shell script (download_nasa_images.sh) that uses the NASA Images API and 'jq' to fetch images.
+- You need 'curl' and 'jq' installed. Run: bash download_nasa_images.sh
+- For high-volume image downloads, use NASA API responsibly; they have rate limits and usage terms.
+
+Audio:
+- The site uses the browser's SpeechSynthesis API to play audio descriptions (no server required).
+
+Performance:
+- The map renders thousands of SVG nodes — for mobile or weak devices, consider server-side tiling or progressive clustering.
+- To expand to tens/hundreds of thousands, convert the renderer to WebGL (e.g., using PixiJS or regl) for better performance.
