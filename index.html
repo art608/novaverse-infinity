@@ -1,63 +1,209 @@
 
 <!doctype html>
 <html>
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>NovaVerse Infinity v3</title>
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NovaVerse Infinity — Evolution v4</title>
 <style>
-body{margin:0;font-family:Arial;background:radial-gradient(circle at 15% 10%,#06224a,#000);color:#e6f2ff}
-header{padding:14px;background:#041028;display:flex;align-items:center}
+:root{--bg:#031024;--panel:#04162a;--accent:#1e90ff;}
+body{margin:0;background:radial-gradient(circle at 15% 10%, #06224a, black);font-family:Inter,Arial,sans-serif;color:#e9f4ff}
+header{display:flex;align-items:center;padding:12px 16px;gap:12px;background:linear-gradient(90deg, rgba(0,0,0,0.2), transparent)}
 h1{margin:0;font-size:1.2rem}
-#search{margin-left:auto;padding:8px;border-radius:8px;border:none}
-#main{display:flex;height:calc(100vh - 56px)}
-#mapwrap{flex:1}
-svg{width:100%;height:100%;background:radial-gradient(circle,#020b1a,#000)}
-#panel{width:380px;background:#020f25;padding:14px;overflow:auto}
-.card{border:1px solid rgba(255,255,255,.1);padding:10px;border-radius:10px;margin-bottom:10px}
-img{width:100%;border-radius:10px;margin-top:10px}
-button{padding:8px 12px;border-radius:10px;border:none;background:#1e90ff;color:black;font-weight:bold}
-</style></head>
+.controls{margin-left:auto;display:flex;gap:8px;align-items:center}
+input,select,button{padding:8px;border-radius:8px;border:0}
+#app{display:flex;height:calc(100vh - 56px)}
+#mapwrap{flex:1;position:relative}
+svg{width:100%;height:100%;background:radial-gradient(circle,#02081a,#000)}
+#panel{width:420px;background:var(--panel);padding:14px;overflow:auto}
+.card{background:transparent;border-radius:10px;padding:10px;margin-bottom:12px;border:1px solid rgba(255,255,255,0.03)}
+.thumb{width:100%;border-radius:8px;margin-top:8px}
+.small{font-size:0.9rem;color:#bcd9ff}
+.footer{font-size:0.85rem;color:#99bce6;padding:8px;text-align:center}
+.switch{display:inline-flex;align-items:center;gap:6px}
+</style>
+</head>
 <body>
-<header><h1>NovaVerse Infinity — Curated & Massive v3</h1>
-<input id="search" placeholder="Search objects..."></header>
-<div id="main">
-<div id="mapwrap"><svg id="map" viewBox="-2000 -2000 4000 4000"></svg></div>
-<div id="panel"><p>Click any object for info and voice.</p></div>
+<header>
+  <h1>NovaVerse Infinity — Evolution v4</h1>
+  <div class="controls">
+    <input id="search" placeholder="Search name or type..." />
+    <select id="filter"><option value="">All types</option></select>
+    <select id="voiceSelect"></select>
+    <button id="ttsToggle">Voice Off</button>
+    <button id="downloadBtn">Image Script</button>
+  </div>
+</header>
+<div id="app">
+  <div id="mapwrap"><svg id="map" viewBox="-4000 -4000 8000 8000" preserveAspectRatio="xMidYMid slice"></svg></div>
+  <aside id="panel"><div id="info"><p>Click an object to view details. Use filters and search to focus.</p></div><div class="card"><h3>Tips</h3><p class="small">This build includes 2,000 sample objects and 50 curated placeholder images. To add real NASA images run the provided image downloader script locally.</p></div><div class="card"><h3>Controls</h3><p class="small">Pan: drag. Zoom: mouse wheel / pinch. Search: type and press Enter.</p></div></aside>
 </div>
+<div class="footer">NovaVerse Infinity — Evolution v4 · Ready for GitHub Pages</div>
+
 <script>
-let objects=[];
-fetch('data_large.json').then(r=>r.json()).then(d=>{objects=d.objects;render();});
-const svg=document.getElementById('map'),panel=document.getElementById('panel');
+// Load data
+let objects = [], voicesList = [];
+fetch('data_large.json').then(r=>r.json()).then(d=>{ objects = d.objects || []; init(); });
 
-function render(){
-for(let i=0;i<500;i++){
- const s=document.createElementNS("http://www.w3.org/2000/svg","circle");
- s.setAttribute("cx",Math.random()*4000-2000);
- s.setAttribute("cy",Math.random()*4000-2000);
- s.setAttribute("r",Math.random()); s.setAttribute("fill","white"); s.setAttribute("opacity",".4");
- svg.appendChild(s);
-}
-objects.forEach(o=>{
- const c=document.createElementNS("http://www.w3.org/2000/svg","circle");
- c.setAttribute("cx",o.x); c.setAttribute("cy",o.y); c.setAttribute("r",Math.sqrt(o.r+3));
- c.setAttribute("fill",o.image!=""?"#ffd27d":"#9cf");
- c.onclick=()=>show(o);
- svg.appendChild(c);
-});
+// SVG map setup
+const svgNS="http://www.w3.org/2000/svg";
+const map = document.getElementById('map');
+const info = document.getElementById('info');
+let clustered = true;
+
+// UI elements
+const filter = document.getElementById('filter');
+const search = document.getElementById('search');
+const voiceSelect = document.getElementById('voiceSelect');
+const ttsToggle = document.getElementById('ttsToggle');
+let ttsEnabled = false;
+
+// populate filter options
+function populateFilters(){
+  const types = Array.from(new Set(objects.map(o=>o.type))).sort();
+  types.forEach(t => {
+    const opt = document.createElement('option'); opt.value=t; opt.textContent=t; filter.appendChild(opt);
+  });
 }
 
-function show(o){
- panel.innerHTML=`<div class='card'><h2>${o.name}</h2><p><b>Type:</b> ${o.type}</p>
- <p><b>Distance:</b> ${o.distance_ly} ly</p><p>${o.description}</p>
- ${o.image?`<img src='${o.image}'>`:""}
- <button onclick="speak('${o.audio_text.replace(/'/g,"")}')">Play Voice</button></div>`;
+// render map with simple clustering (grid-based aggregation)
+function renderMap(list){
+  map.innerHTML = '';
+  // background stars
+  for(let i=0;i<600;i++){
+    const s = document.createElementNS(svgNS,'circle');
+    s.setAttribute('cx', Math.random()*8000-4000);
+    s.setAttribute('cy', Math.random()*8000-4000);
+    s.setAttribute('r', Math.random()*1.6);
+    s.setAttribute('fill', '#fff');
+    s.setAttribute('opacity', Math.random()*0.35);
+    map.appendChild(s);
+  }
+  // clustering: group by grid cell when clustered true
+  const grid = {};
+  const cell = clustered ? 120 : 1;
+  list.forEach(o=>{
+    const gx = Math.floor(o.x / cell), gy = Math.floor(o.y / cell);
+    const key = gx+','+gy;
+    if(clustered){
+      if(!grid[key]) grid[key] = {x: o.x, y: o.y, count:0, samples:[]};
+      grid[key].count++;
+      grid[key].samples.push(o);
+    } else {
+      const g = createNode(o); map.appendChild(g);
+    }
+  });
+  if(clustered){
+    Object.values(grid).forEach(gd=>{
+      const group = gd.count>1 ? {name: gd.count+' objects', x: gd.x, y: gd.y, count:gd.count} : gd.samples[0];
+      const node = createClusterNode(group);
+      map.appendChild(node);
+    });
+  }
 }
-function speak(t){
- const u=new SpeechSynthesisUtterance(t); speechSynthesis.speak(u);
+
+function createNode(o){
+  const g = document.createElementNS(svgNS,'g');
+  g.setAttribute('transform', `translate(${o.x},${o.y})`);
+  g.classList.add('obj');
+  const c = document.createElementNS(svgNS,'circle');
+  c.setAttribute('r', Math.max(1, Math.sqrt(o.r)));
+  c.setAttribute('fill', o.image? '#ffd27d':'#9cf');
+  c.setAttribute('opacity', 0.95);
+  g.appendChild(c);
+  g.addEventListener('click', ev=>{ ev.stopPropagation(); showInfo(o); });
+  return g;
 }
-document.getElementById("search").addEventListener("input",e=>{
- const q=e.target.value.toLowerCase();
- const f=objects.find(o=>o.name.toLowerCase().includes(q));
- if(f){svg.setAttribute("viewBox",`${f.x-300} ${f.y-300} 600 600`);show(f);}
+
+function createClusterNode(group){
+  const g = document.createElementNS(svgNS,'g');
+  const x = group.x, y = group.y;
+  g.setAttribute('transform', `translate(${x},${y})`);
+  const c = document.createElementNS(svgNS,'circle');
+  c.setAttribute('r', Math.max(4, Math.min(30, Math.sqrt(group.count)*3)));
+  c.setAttribute('fill', '#7fbfff');
+  c.setAttribute('opacity', 0.9);
+  g.appendChild(c);
+  const t = document.createElementNS(svgNS,'text');
+  t.setAttribute('y', 4); t.setAttribute('font-size', 10); t.setAttribute('fill', '#001022');
+  t.textContent = group.count ? group.count : '';
+  g.appendChild(t);
+  g.addEventListener('click', ev=>{ ev.stopPropagation(); // on cluster click zoom in and show first few
+    if(group.samples && group.samples.length) { map.setAttribute('viewBox', `${group.x-200} ${group.y-200} 400 400`); showInfo(group.samples[0]); }
+  });
+  return g;
+}
+
+// pan + zoom
+let p=false, last={x:0,y:0};
+map.addEventListener('pointerdown', e=>{ p=true; last={x:e.clientX,y:e.clientY}; map.style.cursor='grabbing'; });
+document.addEventListener('pointerup', ()=>{ p=false; map.style.cursor='grab'; });
+document.addEventListener('pointermove', e=>{ if(!p) return; const dx=(e.clientX-last.x)*(8000/window.innerWidth); const dy=(e.clientY-last.y)*(8000/window.innerHeight); const vb = map.getAttribute('viewBox').split(' ').map(Number); map.setAttribute('viewBox', `${vb[0]-dx} ${vb[1]-dy} ${vb[2]} ${vb[3]}`); last={x:e.clientX,y:e.clientY}; });
+map.addEventListener('wheel', e=>{ e.preventDefault(); const vb=map.getAttribute('viewBox').split(' ').map(Number); const scale = e.deltaY>0?1.12:0.88; const w=vb[2]*scale, h=vb[3]*scale; const cx=vb[0]+vb[2]/2, cy=vb[1]+vb[3]/2; map.setAttribute('viewBox', `${cx - w/2} ${cy - h/2} ${w} ${h}`); });
+
+// info panel with image + tts
+function showInfo(o){
+  const imgTag = o.image ? `<img src="${o.image}" class="thumb">` : '';
+  info.innerHTML = `<div class="card"><h2>${o.name}</h2><p class="small"><b>Type:</b> ${o.type} · <b>Distance:</b> ${o.distance_ly} ly</p><p>${o.description}</p>${imgTag}<p><button onclick="playText('${escape(o.audio_text)}')">Play Voice</button></p></div>`;
+  if(ttsEnabled) playText(o.audio_text);
+}
+
+// search & filter
+search.addEventListener('keydown', e=>{ if(e.key==='Enter'){ doSearch(); }});
+filter.addEventListener('change', ()=>{ applyFilters(); });
+
+function doSearch(){
+  const q = search.value.trim().toLowerCase();
+  if(!q) return;
+  const found = objects.find(o=> o.name.toLowerCase().includes(q) || (o.type && o.type.toLowerCase().includes(q)));
+  if(found){ map.setAttribute('viewBox', `${found.x-300} ${found.y-300} 600 600`); showInfo(found); }
+}
+
+function applyFilters(){
+  const t = filter.value;
+  let list = objects;
+  if(t) list = objects.filter(o=> o.type===t);
+  renderMap(list);
+}
+
+// TTS
+function playText(txtEsc){
+  const txt = unescape(txtEsc);
+  if('speechSynthesis' in window){
+    const u = new SpeechSynthesisUtterance(txt);
+    const sel = voiceSelect.value;
+    if(sel){ u.voice = voicesList.find(v=>v.name===sel) || null; }
+    speechSynthesis.cancel(); speechSynthesis.speak(u);
+  } else alert('Speech synthesis not supported');
+}
+
+ttsToggle.addEventListener('click', ()=>{ ttsEnabled = !ttsEnabled; ttsToggle.textContent = ttsEnabled? 'Voice On':'Voice Off'; });
+
+// load voices
+function loadVoices(){
+  const v = speechSynthesis.getVoices();
+  voicesList = v;
+  voiceSelect.innerHTML = '';
+  v.forEach(voice=>{ const o = document.createElement('option'); o.value = voice.name; o.textContent = voice.name; voiceSelect.appendChild(o); });
+}
+window.speechSynthesis.onvoiceschanged = loadVoices;
+
+// image download script generator
+document.getElementById('downloadBtn').addEventListener('click', ()=>{
+  const list = objects.filter(o=> o.image).slice(0,200);
+  let script = '#!/bin/bash\nmkdir -p images\n';
+  list.forEach(o=>{ script += `echo "Copying local image: ${o.image}"\ncp "${o.image}" images/ || true\n`; });
+  const blob = new Blob([script], {type:'text/plain'}); const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href=url; a.download='copy_images.sh'; a.click(); URL.revokeObjectURL(url);
+  alert('A small image helper script (copy_images.sh) was generated for local use.');
 });
+
+// initialize UI
+function init(){
+  populateFilters();
+  renderMap(objects);
+}
+
+map.addEventListener('click', ()=>{ info.innerHTML = '<p>Click an object to view details. Use filters and search to focus.</p>'; });
 </script>
-</body></html>
+</body>
+</html>

@@ -1,23 +1,21 @@
 
-NovaVerse Infinity — Curated + Massive Pack v3
-=============================================
+NovaVerse Infinity — Evolution v4
+================================
 
-This version includes:
-✅ 20 curated image files (public-domain style placeholders)
-✅ 520 clickable universe objects
-✅ Search, zoomable star map
-✅ Voice narration for every object
-✅ Ready for GitHub Pages hosting
+What's included:
+- index.html           (Advanced NASA-style UI with clustering, filters, TTS)
+- data_large.json      (2,000 generated objects; some have curated images)
+- images/              (50 curated placeholder images, ready to show)
+- download_nasa_images.sh (helper placeholder script)
+- README.md            (this file)
 
-How to use:
-1. Unzip the file.
-2. Upload EVERYTHING (index.html, data_large.json, images folder) to a GitHub repo.
-3. Go to Settings → Pages → Enable Pages.
-4. Your site will be live at:
-https://yourname.github.io/reponame/
+How to host on GitHub Pages:
+1. Create a new GitHub repo.
+2. Upload index.html, data_large.json, images/ and other files to the repo root.
+3. In repo Settings -> Pages, choose the main branch and root as the source.
+4. Wait a few minutes and visit https://<username>.github.io/<repo>/
 
-If you want, I can now generate:
-• A 5,000 object expansion
-• A black-hole-only pack
-• A galaxy soundscape music pack
-• A mobile app version
+Notes:
+- The UI uses browser SpeechSynthesis for audio. No server needed.
+- To add real NASA images, run your own download script locally using the provided image queries or NASA Images API.
+- If you want me to produce a version with <100 curated real NASA images embedded (public domain), say 'Embed NASA images' and I will prepare a zip with placeholder filenames you can replace, or attempt to fetch them if you provide URLs.
