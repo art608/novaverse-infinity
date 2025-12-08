@@ -1,105 +1,151 @@
 
-<!DOCTYPE html>
+<!doctype html>
 <html>
 <head>
-  <title>NovaVerse Infinity</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      margin:0;
-      background: radial-gradient(circle at top, #0b3d91, black);
-      font-family: Arial, sans-serif;
-      color: white;
-      text-align: center;
-    }
-    h1 {
-      padding: 20px;
-      font-size: 2.5em;
-      letter-spacing: 2px;
-    }
-    #container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 20px;
-      padding: 20px;
-    }
-    .card {
-      background: rgba(0,0,0,0.75);
-      border: 1px solid #1e90ff;
-      border-radius: 15px;
-      padding: 18px;
-      transition: transform 0.3s;
-      cursor: pointer;
-    }
-    .card:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 20px #1e90ff;
-    }
-    .popup {
-      position: fixed;
-      top:0; left:0;
-      width:100%; height:100%;
-      background: rgba(0,0,0,0.9);
-      display:none;
-      justify-content:center;
-      align-items:center;
-    }
-    .popup-content {
-      background:#051a33;
-      padding:30px;
-      border-radius:15px;
-      max-width:450px;
-    }
-    button {
-      margin-top:15px;
-      padding:10px 20px;
-      background:#1e90ff;
-      border:none;
-      color:white;
-      border-radius:10px;
-      cursor:pointer;
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NovaVerse Infinity — Massive Pack (NASA UI)</title>
+<style>
+  :root{--bg1:#041028;--accent:#1e90ff;--panel:rgba(3,18,35,0.85);}
+  body{margin:0;font-family:Inter,Arial,sans-serif;background:radial-gradient(circle at 15% 10%,#06224a,#000);color:#e6f2ff;}
+  header{padding:18px 24px;display:flex;align-items:center;gap:20px;}
+  h1{margin:0;font-size:1.4rem;letter-spacing:1px;}
+  #toolbar{margin-left:auto;display:flex;gap:10px;align-items:center;}
+  #search{padding:10px;border-radius:8px;border:0;min-width:220px}
+  #container{width:100%;height:calc(100vh - 72px);display:flex;gap:12px;padding:12px;box-sizing:border-box;}
+  #mapwrap{flex:1;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);border-radius:12px;overflow:hidden;position:relative;}
+  svg{width:100%;height:100%;display:block;cursor:grab;}
+  #panel{width:360px;max-width:36%;background:var(--panel);padding:14px;border-radius:12px;overflow:auto;}
+  .card{background:transparent;border-radius:10px;padding:8px;margin-bottom:10px;border:1px solid rgba(255,255,255,0.03);}
+  .btn{background:var(--accent);border:none;padding:8px 12px;border-radius:8px;color:#001;cursor:pointer;}
+</style>
 </head>
 <body>
-
-<h1>NovaVerse Infinity — Galaxy Expansion</h1>
-<div id="container"></div>
-
-<div class="popup" id="popup">
-  <div class="popup-content" id="popupContent"></div>
+<header>
+  <h1>NovaVerse Infinity — NASA UI (Massive Pack)</h1>
+  <div id="toolbar">
+    <input id="search" placeholder="Search objects (name or type)..." />
+    <button id="voiceBtn" class="btn">🔊 Voice</button>
+    <button id="downloadImagesBtn" class="btn">Download Images (script)</button>
+  </div>
+</header>
+<div id="container">
+  <div id="mapwrap"><svg id="map" viewBox="-3000 -3000 6000 6000" preserveAspectRatio="xMidYMid slice"></svg></div>
+  <aside id="panel">
+    <div id="info"><p>Click any object on the map to view details. Use search to focus.</p></div>
+  </aside>
 </div>
 
 <script>
-fetch("data.json")
-.then(res => res.json())
-.then(data => {
-  const container = document.getElementById("container");
-  data.objects.forEach(obj => {
-    const div = document.createElement("div");
-    div.className = "card";
-    div.innerHTML = `<h2>${obj.name}</h2><p>${obj.type}</p>`;
-    div.onclick = () => showPopup(obj);
-    container.appendChild(div);
-  });
+// Load dataset
+let objects = [];
+fetch('data_large.json').then(r=>r.json()).then(d=>{
+  objects = d.objects || [];
+  renderMap(objects);
 });
 
-function showPopup(obj){
-  document.getElementById("popup").style.display = "flex";
-  document.getElementById("popupContent").innerHTML = `
-    <h2>${obj.name}</h2>
-    <p><b>Type:</b> ${obj.type}</p>
-    <p><b>Age:</b> ${obj.age}</p>
-    <p><b>Distance:</b> ${obj.distance}</p>
-    <p>${obj.description}</p>
-    <button onclick="closePopup()">Close</button>
-  `;
+const svgNS = "http://www.w3.org/2000/svg";
+const map = document.getElementById('map');
+const info = document.getElementById('info');
+let ttsEnabled = false;
+
+// Render points (simple, with clustering for performance)
+function renderMap(list){
+  // add background stars
+  for(let i=0;i<800;i++){
+    const s = document.createElementNS(svgNS,'circle');
+    s.setAttribute('cx', Math.random()*6000-3000);
+    s.setAttribute('cy', Math.random()*6000-3000);
+    s.setAttribute('r', Math.random()*1.5);
+    s.setAttribute('fill','#fff');
+    s.setAttribute('opacity', Math.random()*0.4);
+    map.appendChild(s);
+  }
+  list.forEach(obj=>{
+    const g = document.createElementNS(svgNS,'g');
+    g.setAttribute('transform', `translate(${obj.x},${obj.y})`);
+    g.classList.add('obj');
+    const c = document.createElementNS(svgNS,'circle');
+    c.setAttribute('r', Math.max(1, Math.sqrt(obj.r)));
+    c.setAttribute('fill', obj.type==='Galaxy'?'#cfe6ff': obj.type==='Black Hole'?'#ffb3b3':'#fff');
+    c.setAttribute('opacity', 0.9);
+    g.appendChild(c);
+    const t = document.createElementNS(svgNS,'text');
+    t.setAttribute('y', -Math.max(3, obj.r)-2);
+    t.setAttribute('font-size', 8);
+    t.setAttribute('fill', '#dfe9ff');
+    t.textContent = obj.name;
+    g.appendChild(t);
+    g.addEventListener('click', (ev)=>{ ev.stopPropagation(); showInfo(obj); });
+    map.appendChild(g);
+  });
 }
 
-function closePopup(){
-  document.getElementById("popup").style.display = "none";
+// Simple pan + zoom
+let isP=false, last={x:0,y:0};
+map.addEventListener('pointerdown', e=>{ isP=true; last={x:e.clientX,y:e.clientY}; map.style.cursor='grabbing'; });
+document.addEventListener('pointerup', ()=>{ isP=false; map.style.cursor='grab'; });
+document.addEventListener('pointermove', e=>{ if(!isP) return; const dx=(e.clientX-last.x)*(6000/window.innerWidth); const dy=(e.clientY-last.y)*(6000/window.innerHeight); const vb = map.getAttribute('viewBox').split(' ').map(Number); map.setAttribute('viewBox', `${vb[0]-dx} ${vb[1]-dy} ${vb[2]} ${vb[3]}`); last={x:e.clientX,y:e.clientY}; });
+
+map.addEventListener('wheel', e=>{ e.preventDefault(); const vb = map.getAttribute('viewBox').split(' ').map(Number); const scale = e.deltaY>0?1.12:0.88; const w=vb[2]*scale, h=vb[3]*scale; const cx = vb[0]+vb[2]/2, cy = vb[1]+vb[3]/2; map.setAttribute('viewBox', `${cx - w/2} ${cy - h/2} ${w} ${h}`); });
+
+// Search
+const search = document.getElementById('search');
+search.addEventListener('input', ()=>{
+  const q = search.value.trim().toLowerCase();
+  if(q.length<2) return;
+  const found = objects.find(o => o.name.toLowerCase().includes(q) || (o.type && o.type.toLowerCase().includes(q)));
+  if(found){
+    // center view on found
+    map.setAttribute('viewBox', `${found.x-400} ${found.y-400} 800 800`);
+    showInfo(found);
+  }
+});
+
+// Info panel + TTS
+function showInfo(obj){
+  info.innerHTML = `
+    <div class="card"><h2>${obj.name}</h2><p><b>Type:</b> ${obj.type}</p>
+    <p><b>Distance (ly):</b> ${obj.distance_ly}</p><p>${obj.description}</p>
+    <p><button onclick="playAudioText('${escape(obj.audio_text)}')" class="btn">Play voice</button></p>
+    </div>`;
+  if(ttsEnabled) playAudioText(obj.audio_text);
 }
+
+document.getElementById('voiceBtn').addEventListener('click', ()=>{ ttsEnabled = !ttsEnabled; document.getElementById('voiceBtn').textContent = ttsEnabled? '🔊 Voice (ON)':'🔊 Voice'; });
+
+function playAudioText(txtEsc){
+  const txt = unescape(txtEsc);
+  if('speechSynthesis' in window){
+    const u = new SpeechSynthesisUtterance(txt);
+    speechSynthesis.cancel();
+    speechSynthesis.speak(u);
+  } else {
+    alert('Speech synthesis not supported in your browser.');
+  }
+}
+
+// Image download helper (script generation)
+document.getElementById('downloadImagesBtn').addEventListener('click', ()=>{
+  const script = generateImageScript(objects.slice(0,200));
+  const blob = new Blob([script], {type:'text/plain'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href=url; a.download='download_nasa_images.sh'; a.click(); URL.revokeObjectURL(url);
+  alert('A download script (download_nasa_images.sh) has been generated for the first 200 objects. Edit API keys and run on your machine.');
+});
+
+function generateImageScript(list){
+  let s = '#!/bin/bash\n# Script to download images using NASA Image and Video Library (or Wikimedia). Edit as needed.\nmkdir -p images\n';
+  list.forEach(o=>{
+    const query = encodeURIComponent(o.image_query);
+    s += `echo "Downloading images for: ${o.name}"\n`;
+    s += `curl -s "https://images-api.nasa.gov/search?q=${query}&media_type=image" | jq -r '.collection.items[0].links[0].href' | xargs -I{} curl -s -o "images/${o.id}.jpg" "{}" || echo "No image for ${o.name}"\n`;
+  });
+  return s;
+}
+
+// click blank area to hide info
+map.addEventListener('click', ()=>{ info.innerHTML = '<p>Click any object on the map to view details. Use search to focus.</p>'; });
 </script>
-
 </body>
 </html>
